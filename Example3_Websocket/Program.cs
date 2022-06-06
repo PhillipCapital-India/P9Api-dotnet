@@ -24,8 +24,8 @@ namespace dotNetExample
     {
         #region dev  credentials
 
-        public const string endPoint   = "https://p9betanoren.phillipcapital.in/NorenWClient/";
-        public const string wsendpoint = "wss://p9betanoren.phillipcapital.in/NorenWS/";
+        public const string endPoint   = "https://p9betanoren.phillipcapital.in/NorenWClientTP/";
+        public const string wsendpoint = "wss://p9betanoren.phillipcapital.in/NorenWSTP/";
         public const string uid = "";
         public const string actid = "";
         public const string pwd = "";
