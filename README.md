@@ -683,9 +683,11 @@ list of MultiLegOrderBookItem
 | Param | Type | Optional |Description |
 | --- | --- | --- | ---|
 
-##  <a name="md_tpseries"></a> GetTimePriceData /ChartData
 
-##### RequestDetails: public bool SendGetTPSeries(OnResponse response, string exch, string token, string starttime = null, string endtime = null, string interval = null)
+
+## GetOptionChain
+##### RequestDetails:
+
 | Param | Type | Optional |Description |
 | --- | --- | --- | ---|
 
@@ -693,10 +695,12 @@ list of MultiLegOrderBookItem
 | Param | Type | Optional |Description |
 | --- | --- | --- | ---|
 
-## GetOptionChain
+##  <a name="md_tpseries"></a> GetTimePriceData /ChartData
+
 gets the chart date for the symbol
 
-##### RequestDetails:
+##### RequestDetails: public bool SendGetTPSeries(OnResponse response, string exch, string token, string starttime = null, string endtime = null, string interval = null)
+
 | Param | Type | Optional |Description |
 | --- | --- | --- | ---|
 | exchange | ```string``` | True | Exchange NSE  / NFO / BSE / CDS |
