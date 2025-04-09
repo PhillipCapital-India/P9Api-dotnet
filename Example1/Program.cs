@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 using NorenRestApiWrapper;
 
 namespace NorenRestSample
-{    
+{
     public static class Program
     {
         #region dev  credentials
 
-        public const string endPoint = "https://p9betanoren.phillipcapital.in/NorenWClientTP/";
-        public const string wsendpoint = "wss://p9betanoren.phillipcapital.in/NorenWSTP/";
+        public const string endPoint = "http://api.noren.com/NorenWClient/";
+        public const string wsendpoint = "wss://api.noren.com/NorenWSWeb/";
         public const string uid = "";
         public const string actid = "";
         public const string pwd = "";
         public const string factor2 = dob;
         public const string pan = "";
         public const string dob = "";
-        public const string imei = "dotnetApi-machnid";
+        public const string imei = "";
         public const string vc = "";
         public const string appkey = "";
         public const string newpwd = "";
@@ -32,16 +32,17 @@ namespace NorenRestSample
 
         public static bool loggedin = false;
 
-        
+
         public static void OnStreamConnect(NorenStreamMessage msg)
         {
             Program.loggedin = true;
             nApi.SubscribeOrders(Handlers.OnOrderUpdate, uid);
-            nApi.SubscribeToken("NSE", "22");
-            
+            //nApi.SubscribeToken("NSE", "22");
+            nApi.SubscribeTokenDepth("NSE", "22");
+
         }
         public static NorenRestApi nApi = new NorenRestApi();
-        
+
         static void Main(string[] args)
         {
             LoginMessage loginMessage = new LoginMessage();
@@ -62,11 +63,11 @@ namespace NorenRestSample
             {
                 //dont do anything till we get a login response         
                 Thread.Sleep(5);
-            }          
-            
+            }
+
             bool dontexit = true;
-            while(dontexit)
-            {                
+            while (dontexit)
+            {
                 var input = Console.ReadLine();
                 var opts = input.Split(' ');
                 foreach (string opt in opts)
@@ -149,7 +150,7 @@ namespace NorenRestSample
 
                             //start and end time are optional
                             //here we are getting one day's data
-                            nApi.SendGetTPSeries(Handlers.OnResponseNOP, "NSE", "22", start.ToString(), null , "5" );
+                            nApi.SendGetTPSeries(Handlers.OnResponseNOP, "NSE", "22", start.ToString(), null, "5");
                             break;
                         case "W":
                             Console.WriteLine("Enter exch:");
@@ -169,8 +170,8 @@ namespace NorenRestSample
                         case "BM":
                             ActionGetBasketMargin();
                             break;
-                        case "FP":                            
-                            nApi.SendForgotPassword(Handlers.OnResponseNOP,endPoint, uid, pan, dob);
+                        case "FP":
+                            nApi.SendForgotPassword(Handlers.OnResponseNOP, endPoint, uid, pan, dob);
                             break;
                         case "WU":
                             nApi.UnSubscribeToken("NSE", "22");
@@ -191,21 +192,24 @@ namespace NorenRestSample
                             nApi_2.SendGetHoldings(Handlers.OnHoldingsResponse, actid, "C");
                             nApi_2.SendGetQuote(Handlers.OnResponseNOP, "NSE", "22");
                             break;
+                        case "OP":
+                            ActionGetOptionGreeks();
+                            break;
                         default:
                             // do other stuff...
                             ActionOptions();
                             break;
                     }
                 }
-                
+
 
                 //var kp = Console.ReadKey();
                 //if (kp.Key == ConsoleKey.Q)
                 //    dontexit = false;
                 //Console.WriteLine("Press q to exit.");
-            }            
+            }
         }
-        
+
 
         public static DateTime ConvertFromUnixTimestamp(double timestamp)
         {
@@ -275,7 +279,7 @@ namespace NorenRestSample
             order.qty = "10";
             order.dscqty = "0";
             order.prc = "100.5";
-            
+
             order.prd = "I";
             order.trantype = "B";
             order.prctyp = "LMT";
@@ -299,8 +303,8 @@ namespace NorenRestSample
 
             order.prd = "I";
             order.trantype = "B";
-            order.prctyp = "LMT";           
-            
+            order.prctyp = "LMT";
+
             nApi.SendGetOrderMargin(Handlers.OnResponseNOP, order);
         }
 
@@ -353,6 +357,17 @@ namespace NorenRestSample
 
         }
 
+        public static void ActionGetOptionGreeks()
+        {
+            string expiry = "24-NOV-2022";
+            string strike = "150";
+            string spot_price = "200";
+            string int_rate = "100";
+            string volality = "10";
+            string option_type = "CE";
+
+            nApi.SendGetOptionGreek(Handlers.OnResponseNOP, expiry, strike, spot_price, int_rate, volality, option_type);
+        }
         public static void ActionOptions()
         {
             Console.WriteLine("Q: logout.");
@@ -374,6 +389,7 @@ namespace NorenRestSample
             Console.WriteLine("V: get intraday 1 min price data");
             Console.WriteLine("I: get list of index names");
             Console.WriteLine("D: get Option Chain");
+            Console.WriteLine("OP: get Option Greek");
         }
         #endregion
     }

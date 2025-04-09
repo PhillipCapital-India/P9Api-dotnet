@@ -47,7 +47,7 @@ namespace NorenRestSample
 
 
             Program.ActionOptions();
-            return;           
+            return;
         }
         public static void OnUserDetailsResponse(NorenResponseMsg Response, bool ok)
         {
