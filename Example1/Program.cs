@@ -15,15 +15,15 @@ namespace NorenRestSample
     {
         #region dev  credentials
 
-        public const string endPoint = "http://api.noren.com/NorenWClient/";
-        public const string wsendpoint = "wss://api.noren.com/NorenWSWeb/";
+        public const string endPoint = "https://p9betanoren.phillipcapital.in/NorenWClientTP/";
+        public const string wsendpoint = "wss://p9betanoren.phillipcapital.in/NorenWSTP/";
         public const string uid = "";
         public const string actid = "";
         public const string pwd = "";
         public const string factor2 = dob;
         public const string pan = "";
         public const string dob = "";
-        public const string imei = "";
+        public const string imei = "dotnetApi-machnid";
         public const string vc = "";
         public const string appkey = "";
         public const string newpwd = "";
